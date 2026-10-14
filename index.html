@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luis Antonio Santana Jr.</title>
+<meta name="description" content="Aspiring physician-scientist focused on computational neuroscience and machine learning.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23020a02'/%3E%3Crect x='3' y='3' width='58' height='58' rx='8' fill='none' stroke='%2333ff33' stroke-width='2'/%3E%3Ctext x='32' y='38' font-family='monospace' font-weight='bold' font-size='26' text-anchor='middle' fill='%2333ff33'%3ELS%3C/text%3E%3Crect x='20' y='46' width='24' height='4' fill='%2333ff33'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--g:#33ff33;--dim:#1fae1f;--faint:#0e5a0e;--bg:#020a02;--glow:0 0 6px rgba(51,255,51,.55),0 0 14px rgba(51,255,51,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;color:var(--g);font-family:'VT323','Courier New',monospace;font-size:22px;line-height:1.3}
+body{padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));overflow:hidden}
+a{color:var(--g)}
+/* CRT screen */
+#screen{position:relative;height:100%;max-width:1100px;margin:0 auto;border-radius:34px/28px;overflow:hidden;background:radial-gradient(ellipse at center,#06200a 0%,var(--bg) 75%);border:3px solid #0b2a0b;box-shadow:0 0 0 6px #050505,0 0 40px rgba(51,255,51,.18),inset 0 0 90px rgba(0,0,0,.85);text-shadow:var(--glow)}
+#screen::before{content:"";position:absolute;inset:0;z-index:50;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65) 100%)}
+#screen::after{content:"";position:absolute;inset:0;z-index:51;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.28) 0,rgba(0,0,0,.28) 1px,transparent 1px,transparent 3px)}
+.view{position:absolute;inset:0;overflow-y:auto;padding:clamp(18px,4vw,44px)}
+.cur{display:inline-block;width:.55em;height:1em;background:var(--g);box-shadow:var(--glow);vertical-align:-.12em;margin-left:2px;animation:blink 1.06s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* boot */
+#boot pre{font:inherit;white-space:pre-wrap;color:var(--g)}
+#boot .hint{margin-top:1.2em}
+/* desktop */
+#desk{display:none;text-align:center;display:none;flex-direction:column;align-items:center;justify-content:center}
+#desk.on{display:flex}
+#desk h1{font-weight:400;font-size:clamp(34px,7vw,64px);line-height:1.05;letter-spacing:.02em}
+#desk .tag{max-width:30em;margin-top:.7em;color:var(--dim);font-size:clamp(20px,3vw,26px)}
+#desk .mono{margin-top:.9em;font-size:26px}
+.icons{display:flex;gap:clamp(18px,5vw,48px);margin-top:1.6em;flex-wrap:wrap;justify-content:center}
+.ico{background:none;border:2px solid transparent;color:var(--g);font:inherit;text-shadow:inherit;cursor:pointer;padding:12px 14px;border-radius:4px;display:flex;flex-direction:column;align-items:center;gap:6px;width:116px}
+.ico svg{width:64px;height:64px;filter:drop-shadow(0 0 4px rgba(51,255,51,.6))}
+.ico:hover,.ico:focus-visible{border-color:var(--g);background:rgba(51,255,51,.08);outline:none}
+.soc{display:flex;gap:14px;margin-top:2em;flex-wrap:wrap;justify-content:center}
+.soc a{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--faint);border-radius:4px;text-decoration:none}
+.soc a:hover,.soc a:focus-visible{border-color:var(--g);background:rgba(51,255,51,.08);outline:none}
+.soc svg{width:24px;height:24px}
+svg *{stroke:currentColor}
+.fill{fill:currentColor}
+/* window */
+#ov{position:absolute;inset:0;z-index:40;background:rgba(0,6,0,.72);display:none;align-items:center;justify-content:center;padding:clamp(10px,3vw,30px)}
+#ov.on{display:flex}
+.win{position:relative;width:min(860px,100%);height:min(78vh,100%);background:var(--bg);border:2px solid var(--g);box-shadow:var(--glow),inset 0 0 30px rgba(51,255,51,.08);display:flex;flex-direction:column}
+.bar{display:flex;justify-content:space-between;align-items:center;background:var(--g);color:#021002;text-shadow:none;padding:2px 10px}
+.bar button{background:none;border:0;color:#021002;font:inherit;cursor:pointer;padding:0 4px}
+.bar button:hover,.bar button:focus-visible{background:#021002;color:var(--g);outline:none}
+.body{flex:1;overflow-y:auto;padding:clamp(14px,3vw,28px);overscroll-behavior:contain}
+.body h2{font-weight:400;font-size:30px;margin-bottom:.5em}
+.body h3{font-weight:400;font-size:26px;margin:1.3em 0 .3em}
+.body p{margin-bottom:.9em;max-width:42em}
+.body .sub{color:var(--dim)}
+.body a{text-underline-offset:3px}
+.body a:focus-visible{outline:1px solid var(--g);outline-offset:3px}
+.prj{display:flex;gap:16px;padding:16px 0;border-top:1px dashed var(--faint)}
+.prj svg{flex:none;width:44px;height:44px;margin-top:4px}
+.prj h3{margin:0 0 .15em}
+.meta{color:var(--dim);margin-bottom:.4em}
+.res{padding:12px 0;border-top:1px dashed var(--faint)}
+.res b{font-weight:400;font-size:24px}
+.res p{margin:.2em 0 .3em}
+.foot{color:var(--dim);margin-top:1.4em}
+@media (max-width:600px){html,body{font-size:20px}.win{height:100%}}
+@media (prefers-reduced-motion:reduce){.cur{animation:none}}
+</style>
+</head>
+<body>
+<main id="screen">
+  <section id="boot" class="view" aria-live="polite"><pre id="bt"></pre></section>
+
+  <section id="desk" class="view" aria-label="Desktop">
+    <h1>Luis Antonio Santana Jr.</h1>
+    <p class="tag">Aspiring physician-scientist focused on computational neuroscience and machine learning</p>
+    <p class="mono">&gt; LS<span class="cur"></span></p>
+    <nav class="icons" aria-label="Pages">
+      <button class="ico" data-win="about"><svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linejoin="round"><circle cx="32" cy="22" r="10"/><path d="M12 54c0-12 9-18 20-18s20 6 20 18z"/></svg>about</button>
+      <button class="ico" data-win="projects"><svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linejoin="round"><path d="M6 16h20l5 6h27v32H6z"/><path d="M6 28h52"/></svg>projects</button>
+      <button class="ico" data-win="resources"><svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linejoin="round"><path d="M8 12h20c3 0 4 2 4 4v38c0-2-1-4-4-4H8zM56 12H36c-3 0-4 2-4 4v38c0-2 1-4 4-4h20z"/></svg>resources</button>
+    </nav>
+    <nav class="soc" id="soc" aria-label="Social links"></nav>
+  </section>
+
+  <div id="ov" aria-hidden="true">
+    <div class="win" role="dialog" aria-modal="true" aria-labelledby="wt">
+      <div class="bar"><span id="wt"></span><button id="x" aria-label="Close window">[X]</button></div>
+      <div class="body" id="wb"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ============ EDIT ME ============ */
+const SOCIALS = [
+  {id:"linkedin",  label:"LinkedIn",  url:"#"},  /* paste your URL in place of # */
+  {id:"github",    label:"GitHub",    url:"#"},
+  {id:"x",         label:"X",         url:"#"},
+  {id:"instagram", label:"Instagram", url:"#"},
+  {id:"twitch",    label:"Twitch",    url:"#"}
+];
+const ICON = {
+  linkedin:'<rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke-width="2"/><rect class="fill" x="7" y="10" width="2" height="7"/><rect class="fill" x="7" y="7" width="2" height="2"/><path d="M11 17v-7h2v1c1-2 5-2 5 1v5" fill="none" stroke-width="2"/>',
+  github:'<circle cx="7" cy="5" r="2" fill="none" stroke-width="2"/><circle cx="7" cy="19" r="2" fill="none" stroke-width="2"/><circle cx="17" cy="9" r="2" fill="none" stroke-width="2"/><path d="M7 7v10M17 11c0 4-6 2-10 6" fill="none" stroke-width="2"/>',
+  x:'<path d="M4 4l16 16M20 4L4 20" fill="none" stroke-width="2.4"/>',
+  instagram:'<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke-width="2"/><circle class="fill" cx="17" cy="7" r="1"/>',
+  twitch:'<path d="M4 3h17v11l-4 4h-4l-3 3v-3H4z" fill="none" stroke-width="2" stroke-linejoin="round"/><path d="M11 7v5M16 7v5" fill="none" stroke-width="2"/>'
+};
+const PI = { /* project icons */
+  brain:'<circle cx="14" cy="16" r="4"/><circle cx="14" cy="32" r="4"/><circle cx="14" cy="48" r="4"/><circle cx="50" cy="24" r="4"/><circle cx="50" cy="40" r="4"/><path d="M18 16l28 8M18 32l28-8M18 32l28 8M18 48l28-8M18 16l28 24"/>',
+  grid:'<rect x="8" y="8" width="48" height="48"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/>',
+  net:'<circle cx="32" cy="12" r="5"/><circle cx="12" cy="48" r="5"/><circle cx="52" cy="48" r="5"/><circle cx="32" cy="34" r="4"/><path d="M32 17v13M28 37l-12 8M36 37l12 8M16 46l30 0M29 16L15 44M35 16l14 28"/>',
+  lines:'<rect x="6" y="6" width="52" height="52"/><path d="M12 48c10 0 8-30 20-30s8 30 20 30M12 32h40"/>',
+  nmr:'<path d="M4 50h56M4 50h14l2-6 2 6h8l2-30 2 30h6l2-12 2 12h14"/>'
+};
+const PROJECTS = [
+  {i:"brain",n:"Hidden Markov Model of Drug-Seeking Behavior",m:"2026 | C | Research | Completed",t:"Computational Neuroscience, Statistical Modeling",d:"A computational neuroscience project exploring how drug-seeking behavior can be represented as transitions between hidden behavioral states. Built in C, the pipeline uses lever-press and infusion data from rat self-administration experiments to fit a Negative-Binomial Hidden Markov Model and investigate patterns that may be missed by aggregate behavioral counts alone."},
+  {i:"grid",n:"babyBLAS: Parallel Linear Algebra Library",m:"2026 | C, Fortran 90 | Completed",t:"Parallel Computing, Numerical Methods",d:"A scientific computing project building a linear algebra library with serial and parallel implementations using POSIX Threads and OpenMP. Includes optimized matrix multiplication, Gaussian elimination with partial pivoting, LU factorization, and Jacobi iteration, with techniques such as cache blocking, loop interchange, and loop unrolling."},
+  {i:"net",n:"Hybrid MPI + OpenMP Distributed Matrix Multiplication",m:"2026 | C, MPI, OpenMP | Completed",t:"High-Performance Computing, Distributed Computing",d:"A parallel computing project combining MPI for communication between processes with OpenMP for shared-memory parallelism. Implements collective communication to distribute matrix data and gather computed results, alongside automated PBS/Torque job-submission and monitoring scripts for exploring matrix sizes, node counts, and thread configurations."},
+  {i:"lines",n:"Interactive Bifurcation Explorer",m:"2026 | JavaScript | Completed",t:"Dynamical Systems, Numerical Methods",d:"An interactive web application for exploring how changing parameters affects the behavior of a system of linear differential equations. Built with HTML, CSS, and JavaScript, it classifies equilibrium points, plots phase portraits, and animates parameter sweeps to make dynamical systems easier to explore visually."},
+  {i:"nmr",n:"NMR Spectroscopic Data Analyzer",m:"2024 | C++ | Completed",t:"Scientific Computing, Numerical Methods",d:"A scientific computing project for processing nuclear magnetic resonance (NMR) spectrometer data. Implements baseline correction, signal filtering, cubic spline fitting, Fourier transforms, and numerical integration methods to analyze spectral peaks and estimate hydrogen counts."}
+];
+const RES = [
+  {h:"Research opportunities & REUs",p:"Find research experience, summer programs, and mentors. Programs for undergraduates looking for summer research, paid internships, and computational neuroscience opportunities.",l:[
+    ["NSF Research Experiences for Undergraduates","A directory of undergraduate research programs across STEM, including opportunities that may provide stipends and support for housing or travel. Great for students who want research experience outside their home university.","https://www.nsf.gov/funding/initiatives/reu","Explore REU programs"],
+    ["NIH Summer Internship Program","A strong fit for students interested in biomedical research, neuroscience, and computational biology. Interns work with research groups across NIH institutes; requirements depend on the program.","https://www.training.nih.gov/research-training/pb/sip/","Explore NIH internships"],
+    ["Pathways to Science","A broader search tool for summer research, paid internships, scholarships, post-baccalaureate programs, and research-focused training. Useful when you don't know which program to search for yet.","https://www.pathwaystoscience.org/undergrads.aspx","Browse opportunities"]]},
+  {h:"Conferences & competitions",p:"Share your research, meet other scientists, and find your community. Places to present work, get feedback, and discover professional communities.",l:[
+    ["Society for Neuroscience Annual Meeting","The most directly aligned scientific conference for neuroscience. Exposure to current research, scientific networking, and a look at how different labs approach questions about the brain.","https://www.sfn.org/meetings","Explore neuroscience meetings"],
+    ["National Conference on Undergraduate Research (NCUR)","A conference for undergraduate scholarship across many disciplines. A natural option for presenting computational neuroscience or scientific computing projects. Check the official site for current dates and abstract deadlines.","https://ncur.secure-platform.com/2027","Explore NCUR"],
+    ["ABRCMS","A multidisciplinary biomedical research conference with student presentations, professional development, networking, and opportunities to explore graduate programs and research careers.","https://abrcms.org/","Explore ABRCMS"]]},
+  {h:"Tools & guides",p:"Learn the tools and workflows that make research easier to do and reproduce.",l:[
+    ["The Carpentries","Hands-on lessons for learning the Unix shell, Git, Python, R, data analysis, and reproducible research workflows. A strong pick for students who want to become more independent in a research lab.","https://carpentries.org/lessons/","Browse lessons"],
+    ["GitHub Skills","Interactive exercises for learning version control, repository workflows, Markdown, and collaboration. Especially useful for students beginning to publish projects or build a technical portfolio.","https://skills.github.com/","Start learning GitHub"],
+    ["OpenNeuro","A public platform for sharing and discovering neuroscience datasets, including MRI, EEG, MEG, and other neuroimaging data. Useful for data-driven projects without collecting your own dataset.","https://openneuro.org/","Explore neuroscience datasets"]]}
+];
+const PAGES = {
+  about:{t:"C:\\LS\\ABOUT.TXT",h:()=>`
+    <h2>&gt; who i am</h2>
+    <p>My name is Luis Antonio Santana Jr., and I'm a senior at Mercer University completing a B.S. in Biochemistry &amp; Molecular Biology and Computational Science. I hope to pursue an MD/PhD focused on developing and surgically implanting brain-computer interfaces, with the goal of restoring lost function and advancing treatment for neurological disease.</p>
+    <p>I'm currently part of Dr. Ali Gheidi's addiction neuroscience lab at the Mercer School of Medicine, where I study how neuronal ensembles relate to drug-seeking behavior in rat models. Without a computational neuroscience program at Mercer, I worked with Dr. Andrew Pounds and Dr. Ali Gheidi to build a Negative-Binomial Hidden Markov Model in C to identify behavioral states associated with drug seeking. I'm also interested in how AI and machine learning can help us better understand biological systems and push the boundaries of neuroscience.</p>
+    <p>Outside of that, I love the outdoors, wrestling, fishing, cigars, and tequila. I take the work I care about seriously, but I don't think life should revolve around work alone.</p>
+    <h2 style="margin-top:1.2em">&gt; what is this website</h2>
+    <p>I plan to document my journey through this website while providing resources to my fellow early physician-scientists. I have links to my personal social media throughout with contact information if anybody would love to connect. I also stream weekly MWF 6-10pm EST, where anybody can drop in, watch me "work", and ask questions!</p>`},
+  projects:{t:"C:\\LS\\PROJECTS\\",h:()=>`
+    <h2>&gt; projects</h2>
+    <p class="sub">A few things I've built across neuroscience, scientific computing, and mathematical modeling.</p>`+
+    PROJECTS.map((p,k)=>`<article class="prj"><svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linejoin="round" aria-hidden="true">${PI[p.i]}</svg><div><h3>${String(k+1).padStart(2,"0")}/${p.n}</h3><div class="meta">${p.m}<br>${p.t}</div><p>${p.d}</p></div></article>`).join("")},
+  resources:{t:"C:\\LS\\RESOURCES\\",h:()=>`
+    <h2>~/ reference</h2>
+    <p class="sub">Useful places to look when you're finding your footing.</p>`+
+    RES.map((c,k)=>`<h3>${String(k+1).padStart(2,"0")}. ${c.h}</h3><p>${c.p}</p>`+c.l.map(r=>`<div class="res"><b>${r[0]}</b><p>${r[1]}</p><a href="${r[2]}" target="_blank" rel="noopener noreferrer">${r[3]} &#8599;</a></div>`).join("")).join("")+
+    `<p class="foot">[ 03 CATEGORIES | 09 STARTING POINTS ]</p>`}
+};
+
+/* ============ CODE ============ */
+const $=s=>document.querySelector(s), reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* socials */
+$("#soc").innerHTML=SOCIALS.map(s=>`<a href="${s.url}" data-ph="${s.url==="#"}" aria-label="${s.label}" title="${s.label}" ${s.url!=="#"?'target="_blank" rel="noopener noreferrer"':""}><svg viewBox="0 0 24 24">${ICON[s.id]}</svg></a>`).join("");
+$("#soc").addEventListener("click",e=>{const a=e.target.closest("a");if(a&&a.dataset.ph==="true")e.preventDefault()});
+
+/* boot */
+const LINES=["LS-BIOS v1.0  (C) LUIS A. SANTANA JR.","","CPU .................. OK","MEMORY TEST .......... 640K OK","DISPLAY .............. GREEN PHOSPHOR P1","LOADING PERSONAL.SYS . OK","MOUNTING /ABOUT /PROJECTS /RESOURCES ... OK","","SYSTEM READY."];
+let ready=false,booted=false;
+const bt=$("#bt");
+function finishBoot(){bt.innerHTML=LINES.join("\n")+`\n\n<span class="hint">PRESS ANY KEY TO CONTINUE (OR TAP)<span class="cur"></span></span>`;ready=true}
+(function type(i){
+  if(reduce){finishBoot();return}
+  if(i>=LINES.length){setTimeout(finishBoot,350);return}
+  bt.textContent=LINES.slice(0,i+1).join("\n");
+  setTimeout(()=>type(i+1),LINES[i]===""?120:230);
+})(0);
+function enter(){if(!ready||booted)return;booted=true;$("#boot").style.display="none";$("#desk").classList.add("on");$(".ico").focus()}
+addEventListener("keydown",e=>{if(!booted&&!["Shift","Control","Alt","Meta","Tab"].includes(e.key)){e.preventDefault();enter()}},true);
+$("#boot").addEventListener("pointerdown",enter);
+
+/* windows */
+const ov=$("#ov");let last=null;
+function openWin(k){last=document.activeElement;$("#wt").textContent=PAGES[k].t;$("#wb").innerHTML=PAGES[k].h();$("#wb").scrollTop=0;ov.classList.add("on");ov.setAttribute("aria-hidden","false");$("#x").focus()}
+function closeWin(){ov.classList.remove("on");ov.setAttribute("aria-hidden","true");if(last)last.focus()}
+document.querySelectorAll(".ico").forEach(b=>b.addEventListener("click",()=>openWin(b.dataset.win)));
+$("#x").addEventListener("click",closeWin);
+ov.addEventListener("pointerdown",e=>{if(e.target===ov)closeWin()});
+addEventListener("keydown",e=>{
+  if(!ov.classList.contains("on"))return;
+  if(e.key==="Escape"){closeWin();return}
+  if(e.key==="Tab"){const f=[...ov.querySelectorAll("button,a[href]")];const a=document.activeElement,i=f.indexOf(a);
+    if(e.shiftKey&&(i<=0)){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}}
+});
+</script>
+</body>
+</html>
