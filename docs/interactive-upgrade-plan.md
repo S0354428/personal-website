@@ -83,3 +83,19 @@ A playful corner of the site, deliberately separate from the MD/PhD showcase: an
 - Where do babyBLAS and the MPI project currently live?
 - Gheidi sign-off on any data used in the HMM demo (synthetic by default).
 - Start date: after Fri Oct 23, 2026 (Luis, Oct 21 — exam gauntlet first).
+
+## Blog — "FIELD NOTES" (added Oct 21, 2026, Luis's idea; name/format approved by Luis Oct 21)
+
+A research & build log on lasjr.com — NOT a diary. Luis's own line: a personal diary doesn't belong on the public site. Like LOGBOOK, it follows his adopted "archive, not channel" rule — document, don't produce.
+
+- **Route**: `/notes/` — the index lists entries as a terminal-style listing; entries are individual static pages or one scrolling log page (implementer's choice, keep it static either way).
+- **Title**: "FIELD NOTES". Aesthetic: same phosphor-green CRT theme as the rest of the site (#33ff33 on #020a02, VT323); each entry rendered like `cat`-ing a note file.
+- **Content types** (in priority order):
+  1. **Research notes** from the Gheidi lab at a public-appropriate level: methods, ideas, conference recaps (ASBMB, SEMSS).
+  2. **Build logs**: the hackathon decoder, the AP Calc tools, the site demos — what was built, what broke, what's next.
+  3. **Study explainers**: one concept per entry, written as teaching notes.
+- **Governing rule**: the blog is a byproduct of work, never the work. Entries are written in ~15 minutes from notes that already exist — a lab notebook page, a commit, a result. No note = no entry. No schedule, no cadence promises; gaps are normal for a log.
+- **Starter backlog** (already-real material, no new work needed to launch): the MURS Summer 2026 HMM result; Dr. Nepal sharing the bifurcation explorer with colleagues; the Meta hackathon build (Oct 26–Nov 4, 2026); SEMSS 2026 (Nov 14–15, 2026).
+- **Boundary**: lab content limited to what Dr. Gheidi is comfortable having public — methods and milestones yes, unpublished data no (same caveat as the HMM demo).
+- **Sequencing**: rides along in the same build pass as the interactive upgrade (work starts after Fri Oct 23, 2026); priority below the demos, alongside LOGBOOK.
+- **Spec owner**: Quetzal (planning); implementation by Claude per Luis's standing workflow split.
