@@ -45,6 +45,19 @@ Upgrade lasjr.com so each listed project has a live, interactive demo running in
 - Keep the site static (GitHub Pages). No framework migration unless a demo demands it.
 - Each demo stays self-contained so a broken demo never breaks the homepage.
 
+## Fits archive page — "Taco El Flako" (added Oct 21, 2026, Luis's idea)
+
+A playful corner of the site, deliberately separate from the MD/PhD showcase: an archive of Luis's daily western-aesthetic outfits. This follows his adopted "archive, not channel" rule — document, don't produce. It is NOT a personal-brand play.
+
+- **Route**: `/fits/` — a single static page; link it from the site footer/nav as a minor item, not a headline.
+- **Title**: "Taco El Flako".
+- **Content model**: a simple grid. Each entry is exactly three things: one photo, the pieces worn (short list, e.g., "boots: …; hat: …; shirt: …; jeans: …"), and the date. No essays, no audience-facing captions, no comments, no like counts, no posting schedule.
+- **Build**: plain static HTML/CSS in keeping with the existing single-page site; no framework, no JS required beyond optionally lazy-loading images. Photos live in `/fits/img/` with date-based filenames (e.g., `2026-10-24.jpg`), compressed for web.
+- **Upload ritual (the whole point)**: wear something good → phone photo → drop the file in, add one grid entry → done in under 2 minutes. If a week has no entry, nothing is owed.
+- **Guardrail**: the page catalogs what Luis actually wore. The day outfits get chosen *for* the page, it has become content production — out of scope by design.
+- **Sequencing**: rides along in the same build pass as the interactive upgrade (work starts after Fri Oct 23); lowest priority item — cut first if the demos run long.
+- **Spec owner**: Quetzal (planning); implementation by Claude per Luis's standing workflow split.
+
 ## Build pipeline
 
 - GitHub Actions workflow in personal-website: on push, build the WASM demos (Emscripten container) from vendored sources or submodules, then deploy the Pages artifact.
@@ -69,4 +82,4 @@ Upgrade lasjr.com so each listed project has a live, interactive demo running in
 
 - Where do babyBLAS and the MPI project currently live?
 - Gheidi sign-off on any data used in the HMM demo (synthetic by default).
-- Start date: after Wed Oct 21 (exams).
+- Start date: after Fri Oct 23, 2026 (Luis, Oct 21 — exam gauntlet first).
